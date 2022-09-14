@@ -1,5 +1,4 @@
-My personal portfolio of my engineering and software projects. The template was made 
-by HTML5 UP and is credited below.
+My personal portfolio of my engineering and software projects. The template was taken from HTML5 UP and is credited below.
 
 Strata by HTML5 UP
 html5up.net | @ajlkn
