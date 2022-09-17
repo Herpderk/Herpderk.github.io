@@ -4,3 +4,85 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
+<html>
+	<head>
+		<title>Derek's Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="../../index.html" class="image avatar"><img src="../../images/avatar.jpg" alt="" /></a>
+					<h1><strong>My name is Derek Fan. I am a<br />
+					student, engineer, developer, and learner.</strong><br />
+				</div>
+			</header>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- One -->
+					<section id="one">
+						<header class="major">
+							<h2>Linear Quadratic Regulator for Mecanum Drive</h2>
+						</header>
+						<p><strong>
+							(If you have seen my differential steering controller, you can skip this first section)<br>
+							For my testbed project, I needed a method of controlling robots to follow their
+							respective paths. Controlling mobile robots in the context of motion planning is 
+							essentially an issue of trajectory tracking. I opted to implement linear quadratic
+							regulators, a type of optimal feedback controller that is similar to the robust 
+							MPC controllers used in self-driving cars. I designed two different discrete-time 
+							LQR's to be used for differential and mecanum drive robots. This page will cover 
+							my implementation of mecanum drive control.
+						</strong></p>
+						<img src="../../images/fulls/standard-model.jpg" alt="" width="650" height="200"/>
+						<p><strong>
+							Above is the state-space model and quadratic cost function for a discrete-time 
+							LQR, hence giving it the name 'linear quadratic regulator'. The vector x_t represents
+							the current state of the system, u_t represents the control action at the given moment,
+							and x_t+1 is the next state. The cost function g is essentially the sum Qx^2 + Ru^2 
+							that the LQR seeks to minimize. Since Q and R assign coefficients to the costs 
+							of the x and u squred terms, they punish the magnitude of the state and control action
+							respectively: at every given time frame, the cost of controlling the system is weighed
+							against the cost of the state to calculate the optimal control action. For our purposes,
+							the LQR finds a balance between its deviation from its path and its velocity.
+						</strong></p>
+						<img src="../../images/fulls/delta-model.jpg" alt="" width="650" height="200"/>
+						<p><strong>
+							However, my system dynamics yielded unwanted behaviors for both controllers: the mecanum
+							drive controller asymptotically approached waypoints. To solve this, I re-formulated the 
+							linear model to account for past control actions within its state, thus controlling its change 
+							in velocities. The new state-space model can be seen above. One downside to this new model is 
+							that state estimation becomes more difficult—the controller now relies on both position and 
+							velocity feedback to be functional.
+						</strong></p>	
+					</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<ul class="icons">
+						<li><a href="https://github.com/Herpderk?tab=repositories" target="_blank" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="mailto:fand3@uci.edu" target="_blank" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<!--<script src="../assets/js/jquery.poptrox.min.js"></script>-->
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
