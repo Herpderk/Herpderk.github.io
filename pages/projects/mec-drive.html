@@ -54,13 +54,78 @@
 						</strong></p>
 						<img src="../../images/fulls/delta-model.jpg" alt="" width="650" height="200"/>
 						<p><strong>
-							However, my system dynamics yielded unwanted behaviors for both controllers: the mecanum
+							However, my system dynamics yielded unwanted behaviors: the mecanum
 							drive controller asymptotically approached waypoints. To solve this, I re-formulated the 
 							linear model to account for past control actions within its state, thus controlling its change 
 							in velocities. The new state-space model can be seen above. One downside to this new model is 
 							that state estimation becomes more difficult—the controller now relies on both position and 
 							velocity feedback to be functional.
-						</strong></p>	
+						</strong></p>
+						<img src="../../images/fulls/mec-model.jpg" alt="" width="650" height="400"/>
+						<p><strong>
+							Shown above are the state variables, control vector, input matrix, and control matrix. 
+							The state vector is defined by the robot's x and y coordinates alongside its orientation as an angle.
+							Since mecanum drive is omnidirectional, the total velocity of the robot can be split into individual
+							velocities spanning the x, y, and angular directions. At a given moment, the next state is a function
+							of its current state and these velocities. Thus, the control vector is defined
+							by the three velocities. The control and input matrices A and B are straightforward: A poses the state
+							vector as a square matrix, and B multiplies the control vector to allow it to appropriately add to the state.
+						</strong></p>
+						<img src="../../images/fulls/dare.jpg" alt="" width="650" height="65"/>
+						<p><strong>
+							Above is the discrete time algebraic Riccati equation, which helps solve for the optimal control policy
+							that ties the linear state space with the quadratic cost function. By inputting coefficient matrices A, B, Q, and R
+							into this formula, we can iteratively solve for P until a reasonable margin of error has been achieved. 
+						</strong></p>
+						<img src="../../images/fulls/dare_sol.jpg" alt="" width="350" height="200"/>
+						<p><strong>
+							The solution to the algebraic Riccati equation is used to calculate the optimal gain matrix K. The control 
+							policy is equal the state vector multiplied by this coefficient, which yields us an optimal control action at
+							every time frame. Interestingly, unless the maximum velocity was capped at a less-than-ideal speed (around 40 mm/s),
+							the system would experience unwanted oscillations. In order to work around this, I implemented a PID
+							controller that would maintain the speed separately from the LQR; the LQR itself would only be responsible for the 
+							directions of its velocities. Additionally, to make the trajectory tracking more accurate and robust, I 
+							implemented a novel solution for the controller to be able to "see" incoming sharp turns and reduce its speed
+							accordingly.
+						</strong></p>
+						<img src="../../images/fulls/turn-ex.jpg" alt="" width="650" height="200"/>
+						<p><strong>
+							Imagine the sequence of waypoints in the image above. The sharper this turn is, the more parallel the displacement vectors a and b
+							become, all while pointing in opposite directions. Following this logic, the "worst-case" turn would 
+							have two adjacent displacement vectors in perfectly opposing orientations; in other words, the 
+							system's speed must be minimized at 180 degrees. Conversely, speed should be maximized at 0 degrees.
+							With this information, we can assign a rule to punish speed accordingly. 
+						</strong></p>
+						<img src="../../images/fulls/turn-cost.jpg" alt="" width="650" height="300"/>
+						<p><strong>
+							From what has been established, we know that the punishment must be minimized at a change in angle of 0, and 
+							maximized at a difference of 180 degrees or pi radians. Fortunately, the absolute value of the sine function
+							has a local minima at 0, while the cosine function has a local minima at pi radians. Taking the negative of cosine
+							yields a maximima at pi radians, which satisfies our need for a minimum at 0 and a maximum at pi.
+						</strong></p>
+						<img src="../../images/fulls/cost-func.jpg" alt="" width="650" height="300"/>
+						<p><strong>
+							Above is the piecewise function that penalizes speed. The cost C starts as 0 at 0 radians. As the angle approaches
+							pi as it crosses the unit circle from either 0 to pi or 0 to -pi, C approaches 1. Using this piecewise, I was 
+							able to dynamically manipulate the PID's setpoint as a function of C. 
+						</strong></p>
+						<img src="../../images/fulls/mec-output.jpg" alt="" width="650" height="250"/>
+						<p><strong>
+							This is the inverse kinematic model for a four-wheel mecanum drive system. The leftmost vector represents the angular
+							velocities of the front left, front right, rear left, and rear right wheels (in that order). The constants lx and ly 
+							are equal to the half-lengths of the width and height of robot's chassis. Finally, the input vector consists of the x,
+							y, and angular velocities. Not coincidentally, this velocity vector is the same as the control action used in the
+							LQR. In other words, using this formula, we can solve for the angular speed of each individual wheel that will achieve 
+							the motion described by the velocity vector. This is useful for mecanum drive robots that must be interfaced through
+							motor actuation: the angular speed of each motor can correspond to an optimal level of actuation. For every control
+							action calculated, there is a corresponding output for each wheel.
+						</strong></p>
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/EwVV-w6VRaY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>	
+						<p><strong>
+							My results can be viewed in the demonstration above, where the controller is tasked with tracking a parametric 
+							lissajous curve. The code for this controller can be found <a href="https://github.com/Herpderk/distributed-testbed/blob/mec-drive/src/mecanum_controller.py" target="_blank">
+								here</a>.
+						</strong></p>
 					</section>
 
 		<!-- Footer -->

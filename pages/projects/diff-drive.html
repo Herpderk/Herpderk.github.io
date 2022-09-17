@@ -57,7 +57,7 @@
 						<img src="../../images/fulls/delta-model.jpg" alt="" width="650" height="200"/>
 						<img src="../../images/fulls/change.jpg" alt="" width="650" height="130"/>
 						<p><strong>
-							However, my system dynamics yielded unwanted behaviors for both controllers: the differential
+							However, my system dynamics yielded unwanted behaviors: the differential
 							steering controller had unintended high-frequency outputs. To solve this, I re-formulated the 
 							linear model to account for past control actions within its state, thus controlling its change 
 							in velocities. The new state-space model can be seen above. One downside to this new model is 
@@ -71,7 +71,7 @@
 							given moment, the next position of the robot is a function of its current position, current linear velocity,
 							and current angle. Its next orientation is a function of its current angle and angular velocity.
 							Intuitively, when driving an automobile we use the pedal and steering wheel to control the speed and 
-							turn rate. Similarly, Linear and angular velocities are the inputs in this system, and thus define the control vector.
+							turn rate. Similarly, linear and angular velocities are the inputs in this system, and thus define the control vector.
 							The control and input matrices A and B are fairly straightforward: A poses the state vector as a 
 							square matrix, and B multiplies the control vector to allow it to appropriately add to 	the state.
 						</strong></p>
@@ -83,11 +83,11 @@
 						</strong></p>
 						<img src="../../images/fulls/dare_sol.jpg" alt="" width="350" height="200"/>
 						<p><strong>
-							The solution to the algebraic Riccati equation is used to calculate the coefficient matrix K. The control 
+							The solution to the algebraic Riccati equation is used to calculate the optimal gain matrix K. The control 
 							policy is equal the state vector multiplied by this coefficient, which yields us an optimal control action at
 							every time frame.
 						</strong></p>
-						<iframe width="650" height="366" src="https://www.youtube.com/watch?v=6iZ7HlsqKSA?html5=1" target="_blank"></iframe> 
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/6iZ7HlsqKSA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						<p><strong>
 							Above is a demonstration of the LQR tracking the trajectory of a Lissajous parametric curve.
 							The code for the controller can be found 
