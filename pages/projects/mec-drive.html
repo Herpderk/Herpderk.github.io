@@ -81,9 +81,9 @@
 						<p><strong>
 							The solution to the algebraic Riccati equation is used to calculate the optimal gain matrix K. The control 
 							policy is equal the state vector multiplied by this coefficient, which yields us an optimal control action at
-							every time frame. Interestingly, unless the maximum velocity was capped at a less-than-ideal speed (around 40 mm/s),
-							the system would experience unwanted oscillations. In order to work around this, I implemented a PID
-							controller that would maintain the speed separately from the LQR; the LQR itself would only be responsible for the 
+							every time frame. Interestingly, unless the maximum velocity is limited to a small value (around 40 mm/s),
+							the system experiences unwanted oscillations. In order to work around this, I implemented a PID
+							controller that maintains the speed separately from the LQR; the LQR itself is only be responsible for the 
 							directions of its velocities. Additionally, to make the trajectory tracking more accurate and robust, I 
 							implemented a novel solution for the controller to be able to "see" incoming sharp turns and reduce its speed
 							accordingly.
@@ -91,10 +91,11 @@
 						<img src="../../images/fulls/turn-ex.jpg" alt="" width="650" height="200"/>
 						<p><strong>
 							Imagine the sequence of waypoints in the image above. The sharper this turn is, the more parallel the displacement vectors a and b
-							become, all while pointing in opposite directions. Following this logic, the "worst-case" turn would 
+							become, all while pointing in opposite directions. Following this logic, the "worst-case" turn will 
 							have two adjacent displacement vectors in perfectly opposing orientations; in other words, the 
-							system's speed must be minimized at 180 degrees. Conversely, speed should be maximized at 0 degrees.
-							With this information, we can assign a rule to punish speed accordingly. 
+							system's speed must be minimal at 180 degrees. Conversely, speed is maximized at 0 degrees.
+							With this information, we can assign a rule to punish speed accordingly. The setpoint for the speed controller at each given point
+							is a function
 						</strong></p>
 						<img src="../../images/fulls/turn-cost.jpg" alt="" width="650" height="300"/>
 						<p><strong>
@@ -106,12 +107,18 @@
 						<img src="../../images/fulls/cost-func.jpg" alt="" width="650" height="300"/>
 						<p><strong>
 							Above is the piecewise function that penalizes speed. The cost C starts as 0 at 0 radians. As the angle approaches
-							pi as it crosses the unit circle from either 0 to pi or 0 to -pi, C approaches 1. Using this piecewise, I was 
+							pi as it crosses the unit circle from either 0 to pi or 0 to -pi, C approaches 1. Using this piecewise, I am 
 							able to dynamically manipulate the PID's setpoint as a function of C. 
+						</strong></p>
+						<img src="../../images/fulls/setpoint.jpg" alt="" width="500" height="250"/>
+						<p><strong>
+							Above is a method of changing the setpoint as a function of the cost C that I found through trial and error. 
+							As you can see, the setpoint is minimized when cost = 1, or when the net turn is pi radians. The opposite is true 
+							when the turn is measured to be 0.
 						</strong></p>
 						<img src="../../images/fulls/mec-output.jpg" alt="" width="650" height="250"/>
 						<p><strong>
-							This is the inverse kinematic model for a four-wheel mecanum drive system. The leftmost vector represents the angular
+							The final component of this controller is the inverse kinematic model for a four-wheel mecanum drive system. The leftmost vector represents the angular
 							velocities of the front left, front right, rear left, and rear right wheels (in that order). The constants lx and ly 
 							are equal to the half-lengths of the width and height of robot's chassis. Finally, the input vector consists of the x,
 							y, and angular velocities. Not coincidentally, this velocity vector is the same as the control action used in the
