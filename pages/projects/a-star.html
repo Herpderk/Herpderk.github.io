@@ -4,3 +4,109 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
+<html>
+	<head>
+		<title>Derek's Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="../../index.html" class="image avatar"><img src="../../images/avatar.jpg" alt="" /></a>
+					<h1><strong>My name is Derek Fan. I am a<br />
+					student, engineer, developer, and learner.</strong><br />
+				</div>
+			</header>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- One -->
+					<section id="one">
+						<header class="major">
+							<h2>A* Path Planning</h2>
+						</header>
+						<p><strong>
+							I implemented the A* search algorithm to be used as an offline path planner 
+							for UAV Forge's autonomous drone, a senior design project that participates
+							in the AUVSI SUAS competition. The main requirements for the offline planner
+							were for it to generate a path that would pass through waypoints and 
+							avoid pre-defined obstacles in the shortest amount of time. 
+						</strong></p>
+						<img src="../../images/fulls/a-star-full.jpg" alt="" width="500" height="500"/>
+						<p><strong>
+							Above is an example of the algorithm successfully finding the shortest path 
+							from a start to goal node through an obstacle-filled environment. The 
+							gray tiles or nodes represent randomly generated obstacles that cannot be 
+							traveled through.
+						</strong></p>
+						<img src="../../images/fulls/a-star-zoom.jpg" alt="" width="750" height="475"/>
+						<p><strong>
+							Here is a clearer view of the figure. The blue and green nodes are the start
+							and goal, respectively. The yellow nodes represent spaces the algorithm has
+							"seen" but not actually traveled to. The orange nodes are alternate paths that
+							the algorithm has explored. Finally, the red is the final path that yields the 
+							least distance.
+						</strong></p>
+						<img src="../../images/fulls/a-star-list.jpg" alt="" width="500" height="700"/>
+						<p><strong>
+							Above is a representation of the path as a series of x-y coordinates. So how 
+							exactly does this algorithm work? <br><br>
+							A* is essentially a "guided" version of Djikstra's algorithm, which seeks to 
+							map out every node in the environment of interest before deciding on the shortest
+							path available. Djikstra's follows the cost function f(n) = g(n), which states that 
+							the cost f at every node is a value g that represents the difficulty to reach 
+							node n. The shortest path will minimize this cost function. However, before 
+							it can calculate the ideal route, Djikstra's must assign costs to every possible
+							node. While exploring nodes, it exhibits a behavior akin to trickling water 
+							branching in every available direction. In an open environment with g-costs 
+							associated with distance, this is not computationally feasible. <br><br>
+							A* builds upon the idea of minimizing a cost function by revising it to f(n) =
+							g(n) + h(n). This new term is the heuristic cost, an estimate of the difficulty
+							of reaching the goal from node n. In most scenarios, this is simply the distance
+							between the current node and goal. The cost at every node is therefore its distance
+							from the start in addition to its distance from the end. The closer a node is to
+							the goal, the smaller its cost will be. The addition of the heuristic directs the 
+							Djikstra's random "trickle" into streams that will always progress towards the 
+							goal. This is apparent in the first image, where the colored tiles largely
+							highlighted a path towards the end node. <br><br>
+							Although A* will almost always return an optimal path, it is not without its 
+							weaknesses. For one, it has a large space complexity attributed to the need
+							to store all explored nodes before calculating the shortest path. It is slower 
+							to compute than the likes of RRT (rapidly-exploring random tree), and demands 
+							certainty and information in its environemnt to be successful in real-world scenarios. 
+
+
+							
+						</strong></p>
+						
+					</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<ul class="icons">
+						<li><a href="https://github.com/Herpderk?tab=repositories" target="_blank" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://www.linkedin.com/in/derek-fan-uci/" target="_blank" class="icon brands fa-linkedin"><span class="label"></span></a></li>
+						<li><a href="mailto:fand3@uci.edu" target="_blank" class="icon solid fa-envelope"><span class="label"></span></a></li>
+					</ul>
+					<ul class="copyright">
+						Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<!--<script src="../assets/js/jquery.poptrox.min.js"></script>-->
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
