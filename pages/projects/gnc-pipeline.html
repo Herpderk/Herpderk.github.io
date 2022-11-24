@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<!--
+	Strata by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Derek's Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="inner">
+					<a href="../../index.html" class="image avatar"><img src="../../images/avatar.jpg" alt="" /></a>
+					<h1><strong>My name is Derek Fan. I am a<br />
+					student, engineer, developer, and learner.</strong><br />
+				</div>
+			</header>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- One -->
+					<section id="one">
+
+						<header class="major">
+							<h2><strong>GNC Pipline and Control Loop for Autonomous Drones</strong></h2>
+						</header>
+
+						<p><strong>
+							The AUVSI SUAS is a yearly competition in which student teams must use the drones
+							they have designed, built, and tested to autonomously complete several given tasks.
+							For the 2022 competition, the main competition tasks include mission waypoints, obstacle
+							avoidance, and drop targets. Alongside accurately passing through given
+							waypoints, drones must be able to avoid potential obstacles (trees, birds, other drones),
+							detect targets on the ground from 75 feet above the ground, and accurately and safely drop 
+							bottles on said targets. Most flight control software conveniently support "mission mode",
+							which allows users to upload a pre-defined path that the drone will attempt to follow. However,
+							such a feature is not suitable to execute the various of competition objectives. This 
+							necessitates a robust and dynamic control system/interface in which the drone is able to 
+							trigger changes in its flight pattern when certain events occur.
+						</strong></p>
+
+						<img src="../../images/fulls/pipeline.png" alt="" width="650" height="360"/>
+						<p><strong>
+							Above is the pipeline that describes the flow of information from the global path planner, 
+							obstacle avoidance, and drop detection processes to the control loop. The avoidance and 
+							drop detection processes publish corresponding waypoints to their respective ROS topics,
+							which are taken in by subscribers. Since the three objectives of the competition hold 
+							different levels of priority, with the descending order being obstacle avoidance, global
+							path, and drop targets, waypoints falling under these categories are assigned appropriate
+							priority values and automatically sorted within a priority queue. The control loop 
+							constantly reads the queue for the highest priority waypoints and adjusts its flight
+							path accordingly.
+						</strong></p>
+
+						<img src="../../images/fulls/control-loop.jpg" alt="" width="450" height="450"/>
+						<p><strong>
+							This is the algorithm for the control loop implementation. The basic idea is that the loop
+							repeatedly searches the priority queue for a potentially higher priority waypoint while flying
+							towards its current objective, and interrupts the current waypoint if one is found. Information
+							of the drone's state and commands are all received and sent through the MAVROS subscriber and 
+							topic interface. ArduCopter supports MAVROS communication in its "guided mode".
+						</strong></p>
+
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/4duOQiIV6eE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<p><strong>
+							Above is a demonstration of the pipeline working with a "dummy" obstacle avoidance waypoint.
+						</strong></p>
+
+					</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<ul class="icons">
+						<li><a href="https://github.com/Herpderk?tab=repositories" target="_blank" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://www.linkedin.com/in/derek-fan-uci/" target="_blank" class="icon brands fa-linkedin"><span class="label"></span></a></li>
+						<li><a href="mailto:fand3@uci.edu" target="_blank" class="icon solid fa-envelope"><span class="label"></span></a></li>
+					</ul>
+					<ul class="copyright">
+						Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<!--<script src="../assets/js/jquery.poptrox.min.js"></script>-->
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
