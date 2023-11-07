@@ -31,12 +31,52 @@
 							<h2><strong>Quadrotor Robust Adaptive Control Research</strong></h2>
 						</header>
 						<p><strong>
-							This is a repository undergoing development for use in my research in robust and adaptive control methods. Specifically, I will be implementing adaptive control barrier function, robust adaptive tube MPC, and L1 adaptive control for quadrotor trajectory tracking and delivery. The package also includes convenient lightweight simulation tools, and I have future plans to incorporate ROS functionalities as well. Below is a demonstration of an nonlinear MPC driving the quadrotor towards a single setpoint for 10 seconds. The project can be found <a href="https://github.com/Herpderk/QRAC-Toolbox/tree/main" target="_blank">here</a>.
+							This is a repository undergoing development for use in my research in robust and adaptive control methods.
+							I will be implementing adaptive control barrier function, robust adaptive tube MPC, and L1 adaptive control
+							for quadrotor trajectory tracking. The package also includes convenient lightweight simulation tools,
+							and I have future plans to incorporate ROS functionalities as well. The project can be found 
+							<a href="https://github.com/Herpderk/QRAC-Toolbox/tree/main" target="_blank">here</a>.
+						</strong></p>
+						<p><strong>
+							Below are two scenarios involving the same nonlinear MPC with modeling error:
+							the true mass and moments of inertia of the drone are 8 times greater than those of the MPC's model.
+							The first scenario demonstrates the MPC attempting to converge on a position setpoint of x = 5, y = 5, and z = 5 meters.
+							Due to the modeling error, the MPC produces unstable tracking and steady-state error in the z-direction.
 						</strong></p>
 						<video width="100%" height="600px" controls>
-							<source src="../../images/fulls/minimal_sim.mp4" type="video/mp4">
-						  Your browser does not support the video tag.
-						</video> 
+							<source src="../../images/fulls/inacc_mpc_setpoint.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+						<strong><p><br>
+							The second scenario demonstrates the same MPC and modeling error but in a cascaded control architecture.
+							The MPC serves as the outer reference controller for an inner L1 controller with piecewise constant adaptation.
+							With no information of the discrepancies between the MPC's model and the true plant dynamics,
+							the L1-augmented MPC is able to arrive at the same position setpoint more efficiently and with less error.
+						</strong></p>
+						<video width="100%" height="600px" controls>
+							<source src="../../images/fulls/l1_mpc_setpoint.mp4" type="video/mp4">
+							Your browser does not support the video tag.
+						</video>
+						<strong><p><br>
+							At the end of the simulated 10 seconds, the final position is visible as the first 3 states in the terminal output.
+							The L1-augmented MPC, still in the process of adapting, can be seen converging on the setpoint with a position of
+							~ x = 4.9, y = 4.9, z = 4.7.
+						</strong></p>
+						<p><strong>
+							For information on implementation of L1 with piecewise constant adaptation, check out these papers:<br>
+							<a href="https://arxiv.org/pdf/2109.04210.pdf" target="_blank">
+								<i>Performance, Precision, and Payloads: Adaptive Nonlinear MPC for Quadrotors</i>
+							</a><br>
+							<a href="https://arxiv.org/pdf/2004.00152.pdf" target="_blank">
+								<i>L1-Adaptive MPPI Architecture for Robust and Agile Control of Multirotors</i>
+							</a><br>
+							<a href="https://ieeexplore.ieee.org/document/5530686" target="_blank">
+								<i>L1 adaptive controller for multi-input multi-output systems in the presence of nonlinear unmatched uncertainties</i>
+							</a><br>
+							<a href="https://ieeexplore.ieee.org/document/6425935" target="_blank">
+								<i>L1 adaptive controller for MIMO systems with unmatched uncertainties using modified piecewise constant adaptation law</i>
+							</a>
+						</strong></p>
 					</section>
 
 
